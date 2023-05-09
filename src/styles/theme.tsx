@@ -25,4 +25,11 @@ const breakpoints = {
   xl: '1200px'
 };
 
-export const theme = extendTheme({ colors, fonts, breakpoints });
+const fontSizes = {
+  sm: '0.875rem',
+  md: '1rem',
+  lg: '1.125rem',
+  xl: '1.25rem'
+};
+
+export const theme = extendTheme({ colors, fonts, breakpoints, fontSizes });
