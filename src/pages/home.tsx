@@ -6,7 +6,7 @@ import { Box, Text } from '@chakra-ui/react';
 export default function Home() {
   return (
     <Box>
-      <Text color="brand.700">Home</Text>
+      <Text color="primary.500">Home</Text>
     </Box>
   );
 }

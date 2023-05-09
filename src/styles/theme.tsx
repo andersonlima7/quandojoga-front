@@ -13,4 +13,16 @@ const colors = {
   }
 };
 
-export const theme = extendTheme({ colors });
+const fonts = {
+  body: 'Roboto, sans-serif',
+  heading: 'Montserrat, sans-serif'
+};
+
+const breakpoints = {
+  sm: '320px',
+  md: '768px',
+  lg: '960px',
+  xl: '1200px'
+};
+
+export const theme = extendTheme({ colors, fonts, breakpoints });
