@@ -1,6 +1,8 @@
 // 1. Import the extendTheme function
 import { extendTheme } from '@chakra-ui/react';
 
+import { mode, GlobalStyleProps, Styles } from '@chakra-ui/theme-tools';
+
 // 2. Extend the theme to include custom colors, fonts, etc
 const colors = {
   brand: {
@@ -10,26 +12,57 @@ const colors = {
   },
   primary: {
     500: '#D72137'
+  },
+  gray: {
+    850: '#292929',
+    950: '#121212'
   }
 };
 
 const fonts = {
-  body: 'Roboto, sans-serif',
-  heading: 'Montserrat, sans-serif'
-};
-
-const breakpoints = {
-  sm: '320px',
-  md: '768px',
-  lg: '960px',
-  xl: '1200px'
+  heading: 'Roboto, sans-serif',
+  body: 'Montserrat, sans-serif'
 };
 
 const fontSizes = {
-  sm: '0.875rem',
-  md: '1rem',
-  lg: '1.125rem',
-  xl: '1.25rem'
+  smm: '12px',
+  sm: '14px',
+  md: '16px',
+  lg: '24px',
+  xl: '32px'
 };
 
-export const theme = extendTheme({ colors, fonts, breakpoints, fontSizes });
+const styles: Styles = {
+  global: (props: GlobalStyleProps) => ({
+    body: {
+      color: mode('gray.800', 'whiteAlpha.900')(props),
+      bg: mode('gray.100', 'gray.950')(props)
+    }
+  })
+};
+
+const components = {
+  Card: {
+    baseStyle: (props: GlobalStyleProps) => ({
+      body: {
+        bg: mode('white', 'gray.850')(props),
+        borderRadius: '8px'
+      }
+    })
+  },
+  Drawer: {
+    // setup light/dark mode component defaults
+    baseStyle: (props: GlobalStyleProps) => ({
+      dialog: {
+        bg: mode('white', 'gray.950')(props)
+      }
+    })
+  }
+};
+export const theme = extendTheme({
+  colors,
+  fonts,
+  fontSizes,
+  components,
+  styles
+});
