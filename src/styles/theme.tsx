@@ -28,6 +28,7 @@ const fontSizes = {
   smm: '12px',
   sm: '14px',
   md: '16px',
+  mdd: '18px',
   lg: '24px',
   xl: '32px'
 };

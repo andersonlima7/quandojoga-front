@@ -5,7 +5,6 @@ import {
   Flex,
   Image,
   Text,
-  useBreakpointValue,
   Box,
   Icon,
   chakra
@@ -22,28 +21,40 @@ export default function MatchCard({ match }: MathCardProps) {
   // const myTeam = 'Bahia'; // TODO: Team context
 
   const date = moment(match.date, 'DD-MM-YYYY').locale('pt-br');
+  const currentDate = moment();
+  const weeksDiff = date.diff(currentDate, 'weeks');
 
-  const formattedDate = useBreakpointValue({
-    sm: date.format('DD [de] MMM. [de] YYYY').toUpperCase(),
-    base: date.format('DD/MM/YY').toUpperCase()
-  });
+  const formattedDate =
+    weeksDiff <= 2
+      ? date.format('ddd[.], DD/MM/YY').toUpperCase()
+      : date.format('DD/MM/YYYY');
 
   return (
-    <CardContainer w={['100%', '28.125rem']}>
+    <CardContainer w="100%">
       <CardBody padding="10px">
-        <Flex w="100%" flexDir="column" align="center" gap="5px">
+        <Flex
+          w="100%"
+          flexDir="column"
+          align="center"
+          gap="5px"
+          justify="space-between"
+        >
           <Flex gap="20px" w="100%" justify="center">
             <TeamContainer>
               <Image src={match.team_home_logo} w="50px" />
               <TeamName>{match.team_home}</TeamName>
             </TeamContainer>
             <Flex flexDir="column" align="center" justify="center" w="150px">
-              <Text fontWeight={400} textAlign="center">
+              <Text
+                fontWeight={400}
+                textAlign="center"
+                fontSize={['smm', 'sm']}
+              >
                 {formattedDate === 'DATA INVÁLIDA'
                   ? match.date.toUpperCase()
                   : formattedDate}
               </Text>
-              <Text fontSize="1.25rem">{match.time}</Text>
+              <Text fontSize="mdd">{match.time}</Text>
             </Flex>
             <TeamContainer>
               <Image src={match.team_away_logo} w="50px" />
@@ -51,17 +62,21 @@ export default function MatchCard({ match }: MathCardProps) {
             </TeamContainer>
           </Flex>
           <Box fontWeight={300}>
-            <IconsContainer>
-              <Icon as={CiPlay1} />
-              <Text fontSize="sm">{match.tv.replaceAll(',', ' | ')}</Text>
-            </IconsContainer>
+            {match.tv ? (
+              <IconsContainer>
+                <Icon as={CiPlay1} />
+                <IconsText>{match.tv.replaceAll(',', ' | ')}</IconsText>
+              </IconsContainer>
+            ) : (
+              <Box mb="21px" />
+            )}
             <IconsContainer>
               <Icon as={CiLocationOn} />
-              <Text fontSize="sm">{match.location}</Text>
+              <IconsText>{match.location}</IconsText>
             </IconsContainer>
           </Box>
-          <Divider mb="10px" />
         </Flex>
+        <Divider mb="10px" />
         <Flex justify="left" align="center" fontSize="sm" gap="5px">
           <Image src={match.championship_logo} boxSize="20px" />
           <Text>{match.championship.toUpperCase()}</Text>
@@ -74,9 +89,10 @@ export default function MatchCard({ match }: MathCardProps) {
 // Common styles
 const CardContainer = chakra(Card, {
   baseStyle: {
-    maxW: '28.125rem',
-    minW: '21.125rem',
-    fontSize: 'md'
+    maxW: { sm: '100%', md: '475px' },
+    minW: 'fit-content',
+    fontSize: 'md',
+    minH: '175px'
   }
 });
 const TeamContainer = chakra(Flex, {
@@ -84,7 +100,8 @@ const TeamContainer = chakra(Flex, {
     flexDir: 'column',
     alignItems: 'center',
     w: '100%',
-    maxW: '6.875rem'
+    minW: 'fit-content',
+    gap: '5px'
   }
 });
 
@@ -92,7 +109,9 @@ const TeamName = chakra(Text, {
   baseStyle: {
     textAlign: 'center',
     fontWeight: 400,
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    fontSize: ['12px', '14px']
+    // whiteSpace: 'nowrap'
   }
 });
 
@@ -101,5 +120,12 @@ const IconsContainer = chakra(Flex, {
     justifyContent: 'center',
     alignItems: 'center',
     gap: '2px'
+  }
+});
+
+const IconsText = chakra(Text, {
+  baseStyle: {
+    fontSize: 'sm',
+    fontWeight: 'light'
   }
 });

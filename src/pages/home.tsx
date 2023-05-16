@@ -1,13 +1,18 @@
-import { Flex, Link } from '@chakra-ui/react';
+import { Flex, Heading, Input } from '@chakra-ui/react';
 import MatchCard from '../components/MatchCard';
 
+import Calendar from '../components/Calendar';
 /**
  * Home page
  */
 export default function Home() {
   return (
-    <Flex flexDir="column" align="center" padding="0 10px">
-      <Link>Home</Link>
+    <Flex flexDir="column" align="center" padding="0 10px" mt="10px" gap="20px">
+      <Heading fontSize="mdd">Todos os Jogos</Heading>
+      <Flex w="100%" align="center" gap="10px">
+        <Input w="100%" placeholder="Pesquise partidas" />
+        <Calendar />
+      </Flex>
 
       <MatchCard
         match={{
