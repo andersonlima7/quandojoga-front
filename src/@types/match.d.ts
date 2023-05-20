@@ -7,6 +7,7 @@ type MatchType = {
   time: string;
   championship: string;
   championship_logo: string;
+  description: string;
   tv: string;
   location: string;
 };

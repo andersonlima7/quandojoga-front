@@ -15,9 +15,10 @@ import 'moment/dist/locale/pt-br';
 
 interface MathCardProps {
   match: MatchType;
+  teamPage?: boolean;
 }
 
-export default function MatchCard({ match }: MathCardProps) {
+export default function MatchCard({ match, teamPage = false }: MathCardProps) {
   // const myTeam = 'Bahia'; // TODO: Team context
 
   const date = moment(match.date, 'DD-MM-YYYY').locale('pt-br');
@@ -76,11 +77,19 @@ export default function MatchCard({ match }: MathCardProps) {
             </IconsContainer>
           </Box>
         </Flex>
-        <Divider mb="10px" />
-        <Flex justify="left" align="center" fontSize="sm" gap="5px">
-          <Image src={match.championship_logo} boxSize="20px" />
-          <Text>{match.championship.toUpperCase()}</Text>
-        </Flex>
+
+        {teamPage && (
+          <>
+            <Divider mb="10px" />
+            <Flex w="100%" justify="space-between" align="center">
+              <Flex justify="left" align="center" fontSize="sm" gap="5px">
+                <Image src={match.championship_logo} boxSize="20px" />
+                <Text>{match.championship.toUpperCase()}</Text>
+              </Flex>
+              <Text fontSize="10px">{match.description.toUpperCase()}</Text>
+            </Flex>
+          </>
+        )}
       </CardBody>
     </CardContainer>
   );
@@ -91,8 +100,7 @@ const CardContainer = chakra(Card, {
   baseStyle: {
     maxW: { sm: '100%', md: '475px' },
     minW: 'fit-content',
-    fontSize: 'md',
-    minH: '175px'
+    fontSize: 'md'
   }
 });
 const TeamContainer = chakra(Flex, {

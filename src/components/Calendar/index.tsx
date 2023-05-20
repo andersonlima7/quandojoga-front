@@ -2,7 +2,6 @@ import { useState } from 'react';
 import {
   Icon,
   useColorModeValue,
-  useBreakpointValue,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -23,8 +22,6 @@ export default function Calendar() {
   const onChange = (newValue: any) => {
     setValue(newValue);
   };
-
-  console.log(value);
 
   // Get light and dark hex colors.
   const [light, dark] = useToken('colors', ['white', 'gray.850']);
