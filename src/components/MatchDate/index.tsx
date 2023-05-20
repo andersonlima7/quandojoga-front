@@ -1,16 +1,27 @@
-import { Box, Flex, Text, chakra } from '@chakra-ui/react';
-import React from 'react';
+import {
+  Flex,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  Text,
+  chakra
+} from '@chakra-ui/react';
 import moment, { Moment } from 'moment';
 import { daysBetweenDates } from '../../utils/daysBetween';
+import MatchesList from '../MatchesList';
 
 interface MatchDateProps {
   currentDate: Moment;
   numberOfDates: number;
+  onChange: (date: string) => void;
 }
 
 export default function MatchDates({
   numberOfDates,
-  currentDate
+  currentDate,
+  onChange
 }: MatchDateProps) {
   const today = moment();
 
@@ -29,40 +40,54 @@ export default function MatchDates({
 
   const dates = daysBetweenDates(start, end);
 
-  return (
-    <DatesDay>
-      {dates.map(date => {
-        const currDate = moment(date, 'DD/MM/YY').format('ddd[.], DD [de] MMM');
-        const days = currDate.split(',');
-        const dayWeek = days[0];
-        const dayMonth = days[1];
-        console.log(currDate);
+  const onDateChange = (index: number) => {
+    onChange(dates[index]);
+  };
 
-        return (
-          <Day key={currDate}>
-            <Text>{dayWeek}</Text>
-            <Text>{dayMonth}</Text>
-          </Day>
-        );
-      })}
-    </DatesDay>
+  return (
+    <Tabs w="100%" variant="enclosed" onChange={onDateChange} minW="300px">
+      <TabList>
+        {dates.map(date => {
+          const currDate = moment(date, 'DD/MM/YY').format('ddd[.], DD MMM');
+          const days = currDate.split(',');
+          const dayWeek = days[0];
+          const dayMonth = days[1];
+
+          return (
+            <DayTab key={currDate}>
+              <Text>{dayWeek}</Text>
+              <Text>{dayMonth}</Text>
+            </DayTab>
+          );
+        })}
+      </TabList>
+
+      <TabPanels>
+        {dates.map(date => {
+          return <TabPanel key={date}>{<MatchesList date={date} />}</TabPanel>;
+        })}
+      </TabPanels>
+    </Tabs>
   );
 }
 
-const DatesDay = chakra(Flex, {
+const DayTab = chakra(Tab, {
   baseStyle: {
     w: '100%',
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-});
 
-const Day = chakra(Flex, {
-  baseStyle: {
-    w: '100%',
+    display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    fontSize: 'smm'
+    fontSize: 'smm',
+    fontWeight: 'bold',
+    whiteSpace: 'nowrap',
+    _hover: {
+      borderColor: 'red.300'
+    },
+    _selected: {
+      color: 'primary.500',
+      borderColor: 'primary.500'
+    }
   }
 });

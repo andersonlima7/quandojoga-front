@@ -2,14 +2,21 @@ import { Flex, IconButton, Image, useDisclosure } from '@chakra-ui/react';
 import { RxHamburgerMenu, RxCross1 } from 'react-icons/rx';
 import Logotipo from '/src/assets/logotipo.png';
 import Menu from './Menu';
+import { useMediaQuery } from '@chakra-ui/react';
 
 export default function Header() {
   const { isOpen, onClose, onOpen } = useDisclosure();
+
+  const [isMobile] = useMediaQuery('(max-width: 380px)');
+  console.log(isMobile);
+  const width = isMobile ? '400px' : '100%';
+  console.log(width);
   return (
     <>
       <Flex
         as="header"
-        w="100%"
+        w={width}
+        position="sticky"
         h="70px"
         justify="space-between"
         alignItems="center"

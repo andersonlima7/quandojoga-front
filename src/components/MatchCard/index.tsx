@@ -7,7 +7,8 @@ import {
   Text,
   Box,
   Icon,
-  chakra
+  chakra,
+  useBreakpointValue
 } from '@chakra-ui/react';
 import { CiLocationOn, CiPlay1 } from 'react-icons/ci';
 import moment from 'moment';
@@ -25,13 +26,22 @@ export default function MatchCard({ match, teamPage = false }: MathCardProps) {
   const currentDate = moment();
   const weeksDiff = date.diff(currentDate, 'weeks');
 
+  const breakpointValue = useBreakpointValue({
+    base: 'base',
+    sm: 'sm',
+    md: 'md',
+    lg: 'lg',
+    xl: 'xl'
+  });
+
+  console.log(breakpointValue);
   const formattedDate =
     weeksDiff <= 2
       ? date.format('ddd[.], DD/MM/YY').toUpperCase()
       : date.format('DD/MM/YYYY');
 
   return (
-    <CardContainer w="100%">
+    <CardContainer w="inherit">
       <CardBody padding="10px">
         <Flex
           w="100%"
@@ -45,17 +55,23 @@ export default function MatchCard({ match, teamPage = false }: MathCardProps) {
               <Image src={match.team_home_logo} w="50px" />
               <TeamName>{match.team_home}</TeamName>
             </TeamContainer>
-            <Flex flexDir="column" align="center" justify="center" w="150px">
+            <Flex
+              flexDir="column"
+              align="center"
+              justify="center"
+              w={['50px', '150px']}
+            >
               <Text
                 fontWeight={400}
                 textAlign="center"
                 fontSize={['smm', 'sm']}
+                display={teamPage ? 'block' : 'none'}
               >
                 {formattedDate === 'DATA INVÁLIDA'
                   ? match.date.toUpperCase()
                   : formattedDate}
               </Text>
-              <Text fontSize="mdd">{match.time}</Text>
+              <Text fontSize={['smm', 'mdd']}>{match.time}</Text>
             </Flex>
             <TeamContainer>
               <Image src={match.team_away_logo} w="50px" />
@@ -99,7 +115,7 @@ export default function MatchCard({ match, teamPage = false }: MathCardProps) {
 const CardContainer = chakra(Card, {
   baseStyle: {
     maxW: { sm: '100%', md: '475px' },
-    minW: 'fit-content',
+    minW: '344px',
     fontSize: 'md'
   }
 });
@@ -118,8 +134,11 @@ const TeamName = chakra(Text, {
     textAlign: 'center',
     fontWeight: 400,
     textTransform: 'uppercase',
-    fontSize: ['12px', '14px']
-    // whiteSpace: 'nowrap'
+    fontSize: '12px',
+    whiteSpace: 'nowrap',
+    maxW: ['135px', '180px'],
+    overflow: 'hidden' /* Oculta o conteúdo excedente */,
+    textOverflow: 'ellipsis' /* Corta o texto e exibe reticências no final */
   }
 });
 
