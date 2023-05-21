@@ -6,7 +6,9 @@ import {
   PopoverContent,
   PopoverArrow,
   Button,
-  Text
+  Text,
+  Link,
+  Flex
 } from '@chakra-ui/react';
 import { Calendar as ReactCalendar } from 'react-calendar';
 import { IoCalendarNumberSharp } from 'react-icons/io5';
@@ -33,7 +35,7 @@ export default function Calendar({ date, onDateChange }: CalendarProps) {
   const handleDateChange = (date: any) => {
     const momentDate = moment(date); // Converte para um objeto moment
     onDateChange(momentDate);
-    navigate(`/${momentDate.format('DD-MM-YY')}`);
+    navigate(`/?date=${momentDate.format('DD-MM-YY')}`);
     // window.location.href = `/${momentDate.format('DD-MM-YY')}`;
   };
 
@@ -47,15 +49,22 @@ export default function Calendar({ date, onDateChange }: CalendarProps) {
           </Text>
         </Button>
       </PopoverTrigger>
-      <PopoverContent margin="0 10px">
-        <PopoverArrow />
-        <ReactCalendar
-          onChange={handleDateChange}
-          value={date.toDate()}
-          minDate={new Date()}
-          next2Label={null}
-          prev2Label={null}
-        />
+      <PopoverContent margin="0 10px" bg={colorHex}>
+        <Flex flexDirection="column" align="center">
+          <PopoverArrow />
+          <ReactCalendar
+            onChange={handleDateChange}
+            value={date.toDate()}
+            minDate={new Date()}
+            next2Label={null}
+            prev2Label={null}
+          />
+          <Link href="/" _hover={{}} w="100%">
+            <Button borderRadius="0px" w="100%">
+              Hoje
+            </Button>
+          </Link>
+        </Flex>
       </PopoverContent>
     </Popover>
   );

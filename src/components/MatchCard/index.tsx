@@ -105,7 +105,7 @@ export default function MatchCard({ match, teamPage = false }: MathCardProps) {
 // Common styles
 const CardContainer = chakra(Card, {
   baseStyle: {
-    maxW: { sm: '100%', md: '475px' },
+    maxW: { sm: '100%', md: '420px' },
     minW: '344px',
     fontSize: 'md'
   }
@@ -127,7 +127,7 @@ const TeamName = chakra(Text, {
     textTransform: 'uppercase',
     fontSize: '12px',
     whiteSpace: 'nowrap',
-    maxW: { base: '127px', lg: '178px' },
+    maxW: { base: '127px', lg: '160px' },
     overflow: 'hidden' /* Oculta o conteúdo excedente */,
     textOverflow: 'ellipsis' /* Corta o texto e exibe reticências no final */
   }

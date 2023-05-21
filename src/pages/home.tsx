@@ -12,43 +12,57 @@ import { useState } from 'react';
 import MatchDates from '../components/MatchDate';
 import { useParams } from 'react-router-dom';
 import MatchesList from '../components/MatchesList';
+import Content from '../layouts/content';
 /**
  * Home page
  */
 export default function Home() {
-  const { date } = useParams();
+  const searchParams = new URLSearchParams(window.location.search);
+  const date = searchParams.get('date');
+
+  console.log(date);
   const currDate = moment(date ?? moment(), 'DD-MM-YY');
 
   const [currentDate, setCurrentDate] = useState(currDate);
 
   const [overflow] = useMediaQuery('(max-width: 380px)');
 
+  const numberOfDates =
+    useBreakpointValue({
+      base: 5,
+      lg: 7
+    }) ?? 5;
+
   return (
     <Flex
       flexDir="column"
       align="center"
-      padding={['30px 10px', '30px 10px', '30px 100px']}
-      mt="10px"
-      gap="20px"
       overflowX={overflow ? 'visible' : 'hidden'}
     >
-      <Flex flexDir="column" w="100%" gap="10px">
-        <Heading fontSize="lg" mb="30px">
-          Todos os jogos
-        </Heading>
-        <Flex w="100%" align="center" gap="10px">
-          <Input w="100%" placeholder="Pesquise partidas" />
-          <Calendar date={currentDate} onDateChange={e => setCurrentDate(e)} />
+      <Content>
+        <Flex flexDir="column" w="100%" gap="10px">
+          <Heading fontSize="lg" mb="30px">
+            TODOS OS JOGOS
+          </Heading>
+
+          <Flex w="100%" align="center" gap="10px">
+            <Input w="100%" placeholder="Pesquise partidas" />
+            <Calendar
+              date={currentDate}
+              onDateChange={e => setCurrentDate(e)}
+            />
+          </Flex>
+          <Flex w="100%" justify="left">
+            <MatchDates
+              currentDate={currentDate}
+              numberOfDates={numberOfDates}
+              onDateChange={e => setCurrentDate(e)}
+            />
+          </Flex>
+
+          <MatchesList date={currDate.format('DD-MM-YY')} />
         </Flex>
-
-        <MatchDates
-          currentDate={currentDate}
-          numberOfDates={5}
-          onDateChange={e => setCurrentDate(e)}
-        />
-
-        <MatchesList date={currDate.format('DD-MM-YY')} />
-      </Flex>
+      </Content>
     </Flex>
   );
 }
