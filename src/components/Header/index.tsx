@@ -8,9 +8,7 @@ export default function Header() {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   const [isMobile] = useMediaQuery('(max-width: 380px)');
-  console.log(isMobile);
   const width = isMobile ? '400px' : '100%';
-  console.log(width);
   return (
     <>
       <Flex

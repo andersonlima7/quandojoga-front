@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   Icon,
   useColorModeValue,
@@ -10,31 +9,39 @@ import {
   Text
 } from '@chakra-ui/react';
 import { Calendar as ReactCalendar } from 'react-calendar';
-import { BsFillCalendarDateFill } from 'react-icons/bs';
+import { IoCalendarNumberSharp } from 'react-icons/io5';
 import { useToken } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+import moment, { Moment } from 'moment';
 
+interface CalendarProps {
+  date: Moment;
+  onDateChange: (date: any) => void;
+}
 /**
  * Simple match picker calendar
  */
-export default function Calendar() {
-  const [value, setValue] = useState(new Date());
-
-  const onChange = (newValue: any) => {
-    setValue(newValue);
-  };
-
+export default function Calendar({ date, onDateChange }: CalendarProps) {
   // Get light and dark hex colors.
   const [light, dark] = useToken('colors', ['white', 'gray.850']);
+  const navigate = useNavigate();
   // toggle between light and dark theme
   const colorHex = useColorModeValue(light, dark);
   const root = document.documentElement;
   root.style.setProperty('--default-theme', colorHex);
 
+  const handleDateChange = (date: any) => {
+    const momentDate = moment(date); // Converte para um objeto moment
+    onDateChange(momentDate);
+    navigate(`/${momentDate.format('DD-MM-YY')}`);
+    // window.location.href = `/${momentDate.format('DD-MM-YY')}`;
+  };
+
   return (
     <Popover>
       <PopoverTrigger>
         <Button bg="transparent">
-          <Icon mr="5px" as={BsFillCalendarDateFill} boxSize="22px" />
+          <Icon mr="5px" as={IoCalendarNumberSharp} boxSize="22px" />
           <Text display={['none', 'block']} fontWeight={500}>
             Calendário
           </Text>
@@ -43,8 +50,8 @@ export default function Calendar() {
       <PopoverContent margin="0 10px">
         <PopoverArrow />
         <ReactCalendar
-          onChange={e => onChange(e)}
-          value={value}
+          onChange={handleDateChange}
+          value={date.toDate()}
           minDate={new Date()}
           next2Label={null}
           prev2Label={null}

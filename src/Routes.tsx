@@ -8,7 +8,7 @@ import Home from './pages/home';
 export default function Routes() {
   return (
     <RouterRoutes>
-      <Route path="/" element={<Home />} />
+      <Route path="/:date?" element={<Home />} />
     </RouterRoutes>
   );
 }

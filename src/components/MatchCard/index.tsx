@@ -26,15 +26,6 @@ export default function MatchCard({ match, teamPage = false }: MathCardProps) {
   const currentDate = moment();
   const weeksDiff = date.diff(currentDate, 'weeks');
 
-  const breakpointValue = useBreakpointValue({
-    base: 'base',
-    sm: 'sm',
-    md: 'md',
-    lg: 'lg',
-    xl: 'xl'
-  });
-
-  console.log(breakpointValue);
   const formattedDate =
     weeksDiff <= 2
       ? date.format('ddd[.], DD/MM/YY').toUpperCase()
@@ -64,14 +55,14 @@ export default function MatchCard({ match, teamPage = false }: MathCardProps) {
               <Text
                 fontWeight={400}
                 textAlign="center"
-                fontSize={['smm', 'sm']}
+                fontSize={['smm', 'smm', 'md']}
                 display={teamPage ? 'block' : 'none'}
               >
                 {formattedDate === 'DATA INVÁLIDA'
                   ? match.date.toUpperCase()
                   : formattedDate}
               </Text>
-              <Text fontSize={['smm', 'mdd']}>{match.time}</Text>
+              <Text fontSize={['sm', 'mdd']}>{match.time}</Text>
             </Flex>
             <TeamContainer>
               <Image src={match.team_away_logo} w="50px" />
@@ -124,8 +115,8 @@ const TeamContainer = chakra(Flex, {
     flexDir: 'column',
     alignItems: 'center',
     w: '100%',
-    minW: 'fit-content',
-    gap: '5px'
+    gap: '5px',
+    maxW: ['127px', '178px']
   }
 });
 
@@ -136,7 +127,7 @@ const TeamName = chakra(Text, {
     textTransform: 'uppercase',
     fontSize: '12px',
     whiteSpace: 'nowrap',
-    maxW: ['135px', '180px'],
+    maxW: { base: '127px', lg: '178px' },
     overflow: 'hidden' /* Oculta o conteúdo excedente */,
     textOverflow: 'ellipsis' /* Corta o texto e exibe reticências no final */
   }
