@@ -23,8 +23,6 @@ export default function MatchDates({
   if (currDate.diff(today, 'days') >= 7) {
     const rangeDays = Math.trunc(numberOfDates / 2);
 
-    console.log(rangeDays);
-
     startDate = currDate.clone().subtract(rangeDays + 1, 'days');
     endDate = currDate.clone().add(rangeDays, 'days');
     index = currDate.diff(startDate, 'days') - 1;
@@ -34,9 +32,6 @@ export default function MatchDates({
     index = currDate.diff(today, 'days');
   }
   const dates = daysBetweenDates(startDate, endDate);
-
-  // console.log(startDate);
-  // console.log(endDate);
 
   const borderColor = useColorModeValue('gray.150', 'gray.850');
 
@@ -49,8 +44,6 @@ export default function MatchDates({
           const days = currDateFormatted.split(',');
           const dayWeek = days[0];
           const dayMonth = days[1];
-
-          // console.log(currDate.format('DD-MM-YY'))
 
           return (
             <Box

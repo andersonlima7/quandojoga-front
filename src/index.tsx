@@ -10,8 +10,8 @@ import '/src/styles/Calendar.css';
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
-      <Header />
       <BrowserRouter>
+        <Header />
         <Routes />
       </BrowserRouter>
     </ChakraProvider>

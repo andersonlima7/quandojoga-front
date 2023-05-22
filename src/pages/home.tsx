@@ -10,7 +10,6 @@ import Calendar from '../components/Calendar';
 import moment from 'moment';
 import { useState } from 'react';
 import MatchDates from '../components/MatchDate';
-import { useParams } from 'react-router-dom';
 import MatchesList from '../components/MatchesList';
 import Content from '../layouts/content';
 /**
@@ -19,8 +18,8 @@ import Content from '../layouts/content';
 export default function Home() {
   const searchParams = new URLSearchParams(window.location.search);
   const date = searchParams.get('date');
+  const [filter, setFilter] = useState('');
 
-  console.log(date);
   const currDate = moment(date ?? moment(), 'DD-MM-YY');
 
   const [currentDate, setCurrentDate] = useState(currDate);
@@ -46,7 +45,11 @@ export default function Home() {
           </Heading>
 
           <Flex w="100%" align="center" gap="10px">
-            <Input w="100%" placeholder="Pesquise partidas" />
+            <Input
+              w="100%"
+              placeholder="Pesquise partidas"
+              onChange={e => setFilter(e.target.value)}
+            />
             <Calendar
               date={currentDate}
               onDateChange={e => setCurrentDate(e)}
@@ -60,7 +63,13 @@ export default function Home() {
             />
           </Flex>
 
-          <MatchesList date={currDate.format('DD-MM-YY')} />
+          <MatchesList
+            searchKey={currDate.format('DD-MM-YY')}
+            filter={{
+              text: filter,
+              prop: ['team_home', 'team_away', 'championship']
+            }}
+          />
         </Flex>
       </Content>
     </Flex>

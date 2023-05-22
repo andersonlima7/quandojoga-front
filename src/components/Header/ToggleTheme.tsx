@@ -11,6 +11,8 @@ export default function ToggleTheme() {
       w="40px"
       bg="transparent"
       fontSize="30px"
+      _hover={{}}
+      _active={{}}
     />
   );
 }

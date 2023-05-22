@@ -4,19 +4,37 @@ import {
   Image,
   useDisclosure,
   Link,
-  useColorModeValue
+  useColorModeValue,
+  useBreakpointValue,
+  Text,
+  chakra
 } from '@chakra-ui/react';
 import { RxHamburgerMenu, RxCross1 } from 'react-icons/rx';
 import Logotipo from '/src/assets/logotipo.png';
 import Menu from './Menu';
 import { useMediaQuery } from '@chakra-ui/react';
 import Content from '../../layouts/content';
+import ToggleTheme from './ToggleTheme';
+import MainTeams from './NavOptions';
+import NavOptions from './NavOptions';
 
 export default function Header() {
-  const { isOpen, onClose, onOpen } = useDisclosure();
+  const {
+    isOpen: MenuIsOpen,
+    onClose: MenuOnClose,
+    onOpen: MenuOnOpen
+  } = useDisclosure();
 
-  const [isMobile] = useMediaQuery('(max-width: 380px)');
-  const width = isMobile ? '370px' : '100%';
+  const [overflowed] = useMediaQuery('(max-width: 380px)');
+  const width = overflowed ? '370px' : '100%';
+
+  const isMobile = useBreakpointValue({
+    base: true,
+    sm: true,
+    md: false,
+    lg: false,
+    xl: false
+  });
 
   const borderColor = useColorModeValue('gray.150', 'gray.850');
   return (
@@ -31,24 +49,43 @@ export default function Header() {
         borderBottom="1px solid"
         borderColor={borderColor}
       >
-        <Content flexDirection="row" justify="space-between" mt="0px" w={width}>
+        <Content
+          flexDirection="row"
+          justify={isMobile ? 'space-between' : 'left'}
+          mt="0px"
+          w={width}
+          color="whiteAlpha.900"
+        >
           <Link href="/">
             <Image src={Logotipo} w="160px" alt="Quandojoga.com" />
           </Link>
-          <IconButton
-            icon={isOpen ? <RxCross1 /> : <RxHamburgerMenu />}
-            bg="transparent"
-            color="primary.500"
-            fontSize="25px"
-            transition="all 0.5s"
-            onClick={onOpen}
-            _hover={{ bg: 'transparent' }}
-            transform={isOpen ? 'rotate(90deg)' : 'none'}
-            aria-label="Menu button toggle"
-          />
+
+          {isMobile && (
+            <IconButton
+              icon={MenuIsOpen ? <RxCross1 /> : <RxHamburgerMenu />}
+              bg="transparent"
+              color="primary.500"
+              fontSize="25px"
+              transition="all 0.5s"
+              onClick={MenuOnOpen}
+              _hover={{ bg: 'transparent' }}
+              transform={MenuIsOpen ? 'rotate(90deg)' : 'none'}
+              aria-label="Menu button toggle"
+            />
+          )}
+
+          {!isMobile && (
+            <Flex as="nav" gap="15px" align="center" ml="50px" w="100%">
+              <NavOptions />
+              <ToggleTheme />
+            </Flex>
+          )}
         </Content>
       </Flex>
-      <Menu isOpen={isOpen} onClose={onClose} children={undefined} />
+
+      {isMobile && (
+        <Menu isOpen={MenuIsOpen} onClose={MenuOnClose} children={undefined} />
+      )}
     </>
   );
 }

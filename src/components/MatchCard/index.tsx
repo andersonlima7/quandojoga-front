@@ -8,18 +8,25 @@ import {
   Box,
   Icon,
   chakra,
-  useBreakpointValue
+  useBreakpointValue,
+  Link
 } from '@chakra-ui/react';
 import { CiLocationOn, CiPlay1 } from 'react-icons/ci';
 import moment from 'moment';
 import 'moment/dist/locale/pt-br';
+import { Link as RouterLink } from 'react-router-dom';
 
 interface MathCardProps {
   match: MatchType;
   teamPage?: boolean;
+  championshipPage?: boolean;
 }
 
-export default function MatchCard({ match, teamPage = false }: MathCardProps) {
+export default function MatchCard({
+  match,
+  teamPage = false,
+  championshipPage
+}: MathCardProps) {
   // const myTeam = 'Bahia'; // TODO: Team context
 
   const date = moment(match.date, 'DD-MM-YYYY').locale('pt-br');
@@ -42,10 +49,13 @@ export default function MatchCard({ match, teamPage = false }: MathCardProps) {
           justify="space-between"
         >
           <Flex gap="20px" w="100%" justify="center">
-            <TeamContainer>
-              <Image src={match.team_home_logo} w="50px" />
-              <TeamName>{match.team_home}</TeamName>
-            </TeamContainer>
+            <Link as={RouterLink} to={`/times/${match.team_home}`} _hover={{}}>
+              <TeamContainer>
+                <Image src={match.team_home_logo} w="50px" />
+
+                <TeamName>{match.team_home}</TeamName>
+              </TeamContainer>
+            </Link>
             <Flex
               flexDir="column"
               align="center"
@@ -55,19 +65,21 @@ export default function MatchCard({ match, teamPage = false }: MathCardProps) {
               <Text
                 fontWeight={400}
                 textAlign="center"
-                fontSize={['smm', 'smm', 'md']}
-                display={teamPage ? 'block' : 'none'}
+                fontSize={['smm', 'smm', 'sm']}
+                display={teamPage || championshipPage ? 'block' : 'none'}
               >
-                {formattedDate === 'DATA INVÁLIDA'
+                {formattedDate.toUpperCase() === 'DATA INVÁLIDA'
                   ? match.date.toUpperCase()
                   : formattedDate}
               </Text>
               <Text fontSize={['sm', 'mdd']}>{match.time}</Text>
             </Flex>
-            <TeamContainer>
-              <Image src={match.team_away_logo} w="50px" />
-              <TeamName>{match.team_away}</TeamName>
-            </TeamContainer>
+            <Link as={RouterLink} to={`/times/${match.team_away}`} _hover={{}}>
+              <TeamContainer>
+                <Image src={match.team_away_logo} w="50px" />
+                <TeamName>{match.team_away}</TeamName>
+              </TeamContainer>
+            </Link>
           </Flex>
           <Box fontWeight={300}>
             {match.tv ? (
@@ -93,7 +105,9 @@ export default function MatchCard({ match, teamPage = false }: MathCardProps) {
                 <Image src={match.championship_logo} boxSize="20px" />
                 <Text>{match.championship.toUpperCase()}</Text>
               </Flex>
-              <Text fontSize="10px">{match.description.toUpperCase()}</Text>
+              <Text fontSize="10px" maxW="100px">
+                {match.description.toUpperCase()}
+              </Text>
             </Flex>
           </>
         )}
@@ -127,7 +141,7 @@ const TeamName = chakra(Text, {
     textTransform: 'uppercase',
     fontSize: '12px',
     whiteSpace: 'nowrap',
-    maxW: { base: '127px', lg: '160px' },
+    w: { base: '127px', lg: '150px' },
     overflow: 'hidden' /* Oculta o conteúdo excedente */,
     textOverflow: 'ellipsis' /* Corta o texto e exibe reticências no final */
   }

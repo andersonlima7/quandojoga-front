@@ -15,13 +15,14 @@ const colors = {
   },
   gray: {
     150: '#d7d7d7',
+    250: '#bebebe',
     850: '#292929',
     950: '#121212'
   }
 };
 
 const fonts = {
-  heading: 'Roboto, sans-serif',
+  heading: 'Raleway, sans-serif',
   body: 'Montserrat, sans-serif'
 };
 
@@ -56,6 +57,15 @@ const components = {
     // setup light/dark mode component defaults
     baseStyle: (props: GlobalStyleProps) => ({
       dialog: {
+        bg: mode('white', 'gray.950')(props)
+      }
+    })
+  },
+  Menu: {
+    // setup light/dark mode component defaults
+    variants: (props: GlobalStyleProps) => ({
+      primary: {
+        color: mode('gray.800', 'whiteAlpha.900')(props),
         bg: mode('white', 'gray.950')(props)
       }
     })
