@@ -8,7 +8,8 @@ import {
   Text,
   Link,
   Input,
-  useBreakpointValue
+  useBreakpointValue,
+  Spinner
 } from '@chakra-ui/react';
 import Content from '../layouts/content';
 import { Link as RouterLink } from 'react-router-dom';
@@ -70,41 +71,15 @@ export default function AllChampionships() {
         />
         {isMobile ? (
           <Flex flexDir="column" gap={5}>
-            {currentChampionships.map(championship => {
-              return (
-                <Flex
-                  alignItems="center"
-                  key={
-                    championship.championship_logo + championship.championship
-                  }
-                >
-                  <Image
-                    src={championship.championship_logo}
-                    alt={championship.championship}
-                    boxSize="25px"
-                  />
-                  <Link
-                    fontSize="sm"
-                    fontWeight="bold"
-                    as={RouterLink}
-                    to={`/campeonatos/${championship.championship}`}
+            {currentChampionships ? (
+              currentChampionships.map(championship => {
+                return (
+                  <Flex
+                    alignItems="center"
+                    key={
+                      championship.championship_logo + championship.championship
+                    }
                   >
-                    {championship.championship}
-                  </Link>
-                </Flex>
-              );
-            })}
-          </Flex>
-        ) : (
-          <Grid templateColumns="repeat(5, 1fr)" gap={4}>
-            {currentChampionships.map(championship => {
-              return (
-                <GridItem
-                  key={
-                    championship.championship_logo + championship.championship
-                  }
-                >
-                  <Flex alignItems="center">
                     <Image
                       src={championship.championship_logo}
                       alt={championship.championship}
@@ -119,9 +94,43 @@ export default function AllChampionships() {
                       {championship.championship}
                     </Link>
                   </Flex>
-                </GridItem>
-              );
-            })}
+                );
+              })
+            ) : (
+              <Spinner />
+            )}
+          </Flex>
+        ) : (
+          <Grid templateColumns="repeat(5, 1fr)" gap={4}>
+            {currentChampionships ? (
+              currentChampionships.map(championship => {
+                return (
+                  <GridItem
+                    key={
+                      championship.championship_logo + championship.championship
+                    }
+                  >
+                    <Flex alignItems="center">
+                      <Image
+                        src={championship.championship_logo}
+                        alt={championship.championship}
+                        boxSize="25px"
+                      />
+                      <Link
+                        fontSize="sm"
+                        fontWeight="bold"
+                        as={RouterLink}
+                        to={`/campeonatos/${championship.championship}`}
+                      >
+                        {championship.championship}
+                      </Link>
+                    </Flex>
+                  </GridItem>
+                );
+              })
+            ) : (
+              <Spinner />
+            )}
           </Grid>
         )}
       </Content>

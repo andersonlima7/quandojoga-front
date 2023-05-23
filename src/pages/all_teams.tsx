@@ -8,7 +8,8 @@ import {
   Text,
   Link,
   Input,
-  useBreakpointValue
+  useBreakpointValue,
+  Spinner
 } from '@chakra-ui/react';
 import Content from '../layouts/content';
 import { Link as RouterLink } from 'react-router-dom';
@@ -67,28 +68,10 @@ export default function AllTeams() {
         />
         {isMobile ? (
           <Flex flexDir="column" gap={5}>
-            {currentTeams.map(team => {
-              return (
-                <Flex alignItems="center" key={team.logo + team.team}>
-                  <Image src={team.logo} alt={team.team} boxSize="25px" />
-                  <Link
-                    fontSize="sm"
-                    fontWeight="bold"
-                    as={RouterLink}
-                    to={`/times/${team.team}`}
-                  >
-                    {team.team}
-                  </Link>
-                </Flex>
-              );
-            })}
-          </Flex>
-        ) : (
-          <Grid templateColumns="repeat(5, 1fr)" gap={4}>
-            {currentTeams.map(team => {
-              return (
-                <GridItem key={`${team.logo}${team.team}`}>
-                  <Flex alignItems="center">
+            {currentTeams ? (
+              currentTeams.map(team => {
+                return (
+                  <Flex alignItems="center" key={team.logo + team.team}>
                     <Image src={team.logo} alt={team.team} boxSize="25px" />
                     <Link
                       fontSize="sm"
@@ -99,9 +82,35 @@ export default function AllTeams() {
                       {team.team}
                     </Link>
                   </Flex>
-                </GridItem>
-              );
-            })}
+                );
+              })
+            ) : (
+              <Spinner />
+            )}
+          </Flex>
+        ) : (
+          <Grid templateColumns="repeat(5, 1fr)" gap={4}>
+            {currentTeams ? (
+              currentTeams.map(team => {
+                return (
+                  <GridItem key={`${team.logo}${team.team}`}>
+                    <Flex alignItems="center">
+                      <Image src={team.logo} alt={team.team} boxSize="25px" />
+                      <Link
+                        fontSize="sm"
+                        fontWeight="bold"
+                        as={RouterLink}
+                        to={`/times/${team.team}`}
+                      >
+                        {team.team}
+                      </Link>
+                    </Flex>
+                  </GridItem>
+                );
+              })
+            ) : (
+              <Spinner />
+            )}
           </Grid>
         )}
       </Content>
