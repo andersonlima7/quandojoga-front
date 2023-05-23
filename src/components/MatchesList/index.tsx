@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Text } from '@chakra-ui/react';
+import { Box, Flex, Heading, Image, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { api } from '../../services/api';
 import MatchCard from '../MatchCard';
@@ -64,7 +64,7 @@ export default function MatchesList({
   const groupMatchesByChampionship = () => {
     const groupedMatches: Record<
       string,
-      { matches: MatchType[]; description: string }
+      { matches: MatchType[]; description: string; logo: string }
     > = {};
 
     currentMatches?.forEach(match => {
@@ -73,7 +73,8 @@ export default function MatchesList({
       if (!groupedMatches[championship]) {
         groupedMatches[championship] = {
           matches: [],
-          description: match.description
+          description: match.description,
+          logo: match.championship_logo
         };
       }
 
@@ -87,13 +88,13 @@ export default function MatchesList({
     return sortedGroupedMatches.reduce((current, [championship, matches]) => {
       current[championship] = matches;
       return current;
-    }, {} as Record<string, { matches: MatchType[]; description: string }>);
+    }, {} as Record<string, { matches: MatchType[]; description: string; logo: string }>);
   };
 
   const groupMatchesByDescription = () => {
     const groupedMatches: Record<
       string,
-      { matches: MatchType[]; description: string }
+      { matches: MatchType[]; description: string; logo: string }
     > = {};
 
     matches.forEach(match => {
@@ -103,7 +104,8 @@ export default function MatchesList({
       if (!groupedMatches[weekAndDescription]) {
         groupedMatches[weekAndDescription] = {
           matches: [],
-          description: match.description
+          description: match.description,
+          logo: match.championship_logo
         };
       }
 
@@ -172,9 +174,12 @@ export default function MatchesList({
             <Box mb="5px">
               {orderBy === 'championship' && (
                 <Box>
-                  <Heading as="h2" fontSize="18px" mb="5px">
-                    {championship}
-                  </Heading>
+                  <Flex justify="left" align="center" gap={2}>
+                    <Image src={values.logo} boxSize="30px" />
+                    <Heading as="h2" fontSize="18px">
+                      {championship}
+                    </Heading>
+                  </Flex>
                   <Text>{values.description}</Text>
                 </Box>
               )}
