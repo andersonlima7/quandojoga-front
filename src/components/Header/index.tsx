@@ -5,9 +5,7 @@ import {
   useDisclosure,
   Link,
   useColorModeValue,
-  useBreakpointValue,
-  Text,
-  chakra
+  useBreakpointValue
 } from '@chakra-ui/react';
 import { RxHamburgerMenu, RxCross1 } from 'react-icons/rx';
 import Logotipo from '/src/assets/logotipo.png';
@@ -15,7 +13,6 @@ import Menu from './Menu';
 import { useMediaQuery } from '@chakra-ui/react';
 import Content from '../../layouts/content';
 import ToggleTheme from './ToggleTheme';
-import MainTeams from './NavOptions';
 import NavOptions from './NavOptions';
 
 export default function Header() {

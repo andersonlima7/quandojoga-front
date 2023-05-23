@@ -1,7 +1,7 @@
 import { Box, Flex, Text, chakra, useColorModeValue } from '@chakra-ui/react';
 import moment, { Moment } from 'moment';
 import { daysBetweenDates } from '../../utils/daysBetween';
-import { Link as ReactLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 interface MatchDateProps {
   currentDate: Moment;
   numberOfDates: number;

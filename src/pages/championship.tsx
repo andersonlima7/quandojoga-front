@@ -4,7 +4,6 @@ import {
   Flex,
   Heading,
   Image,
-  Select,
   useColorModeValue
 } from '@chakra-ui/react';
 import Content from '../layouts/content';

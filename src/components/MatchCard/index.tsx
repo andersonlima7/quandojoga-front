@@ -8,7 +8,6 @@ import {
   Box,
   Icon,
   chakra,
-  useBreakpointValue,
   Link
 } from '@chakra-ui/react';
 import { CiLocationOn, CiPlay1 } from 'react-icons/ci';
