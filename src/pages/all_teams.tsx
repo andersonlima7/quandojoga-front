@@ -68,7 +68,7 @@ export default function AllTeams() {
         />
         {isMobile ? (
           <Flex flexDir="column" gap={5}>
-            {currentTeams ? (
+            {Array.isArray(currentTeams) ? (
               currentTeams.map(team => {
                 return (
                   <Flex alignItems="center" key={team.logo + team.team}>
@@ -90,7 +90,7 @@ export default function AllTeams() {
           </Flex>
         ) : (
           <Grid templateColumns="repeat(5, 1fr)" gap={4}>
-            {currentTeams ? (
+            {Array.isArray(currentTeams) ? (
               currentTeams.map(team => {
                 return (
                   <GridItem key={`${team.logo}${team.team}`}>
