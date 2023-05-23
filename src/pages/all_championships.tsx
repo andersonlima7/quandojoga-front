@@ -8,13 +8,11 @@ import {
   Text,
   Link,
   Input,
-  useBreakpointValue,
-  Box
+  useBreakpointValue
 } from '@chakra-ui/react';
 import Content from '../layouts/content';
 import { Link as RouterLink } from 'react-router-dom';
 import { searchInto } from '../utils/search';
-import { removeAccents } from '../utils/removeAccents';
 /**
  *  List of all championships
  */
@@ -72,108 +70,58 @@ export default function AllChampionships() {
         />
         {isMobile ? (
           <Flex flexDir="column" gap={5}>
-            {currentChampionships
-              ?.sort((a, b) =>
-                removeAccents(a.championship).localeCompare(
-                  removeAccents(b.championship)
-                )
-              )
-              .map((championship, index) => {
-                const currentLetter = removeAccents(
-                  championship.championship.charAt(0)
-                );
-                const isFirstLetter =
-                  index === 0 ||
-                  removeAccents(
-                    currentChampionships[index - 1].championship.charAt(0)
-                  ) !== currentLetter;
-
-                return (
-                  <>
-                    {isFirstLetter && (
-                      <Box key={`header-${currentLetter}`}>
-                        <Text fontWeight="bold" textTransform="uppercase">
-                          Letra {currentLetter}
-                        </Text>
-                      </Box>
-                    )}
-                    <Flex
-                      alignItems="center"
-                      key={
-                        championship.championship_logo +
-                        championship.championship
-                      }
-                    >
-                      <Image
-                        src={championship.championship_logo}
-                        alt={championship.championship}
-                        boxSize="25px"
-                      />
-                      <Link
-                        fontSize="sm"
-                        fontWeight="bold"
-                        as={RouterLink}
-                        to={`/campeonatos/${championship.championship}`}
-                      >
-                        {championship.championship}
-                      </Link>
-                    </Flex>
-                  </>
-                );
-              })}
+            {currentChampionships.map(championship => {
+              return (
+                <Flex
+                  alignItems="center"
+                  key={
+                    championship.championship_logo + championship.championship
+                  }
+                >
+                  <Image
+                    src={championship.championship_logo}
+                    alt={championship.championship}
+                    boxSize="25px"
+                  />
+                  <Link
+                    fontSize="sm"
+                    fontWeight="bold"
+                    as={RouterLink}
+                    to={`/campeonatos/${championship.championship}`}
+                  >
+                    {championship.championship}
+                  </Link>
+                </Flex>
+              );
+            })}
           </Flex>
         ) : (
           <Grid templateColumns="repeat(5, 1fr)" gap={4}>
-            {currentChampionships
-              ?.sort((a, b) =>
-                removeAccents(a.championship).localeCompare(
-                  removeAccents(b.championship)
-                )
-              )
-              .map((championship, index) => {
-                const currentLetter = removeAccents(
-                  championship.championship.charAt(0)
-                );
-                const isFirstLetter =
-                  index === 0 ||
-                  removeAccents(
-                    currentChampionships[index - 1].championship.charAt(0)
-                  ) !== currentLetter;
-
-                return (
-                  <>
-                    {isFirstLetter && (
-                      <GridItem key={`empty-${currentLetter}`} colSpan={5}>
-                        <Text fontWeight="bold" textTransform="uppercase">
-                          Letra {currentLetter}
-                        </Text>
-                      </GridItem>
-                    )}
-                    <GridItem
-                      key={
-                        championship.championship_logo +
-                        championship.championship
-                      }
+            {currentChampionships.map(championship => {
+              return (
+                <GridItem
+                  key={
+                    championship.championship_logo + championship.championship
+                  }
+                >
+                  <Flex alignItems="center">
+                    <Image
+                      src={championship.championship_logo}
+                      alt={championship.championship}
+                      boxSize="25px"
+                    />
+                    <Link
+                      fontSize="sm"
+                      fontWeight="bold"
+                      as={RouterLink}
+                      to={`/campeonatos/${championship.championship}`}
                     >
-                      <Flex alignItems="center">
-                        <Image
-                          src={championship.championship_logo}
-                          alt={championship.championship}
-                          boxSize="25px"
-                        />
-                        <Link
-                          fontSize="sm"
-                          fontWeight="bold"
-                          as={RouterLink}
-                          to={`/campeonatos/${championship.championship}`}
-                        >
-                          {championship.championship}
-                        </Link>
-                      </Flex>
-                    </GridItem>
-                  </>
-                );
-              })}
+                      {championship.championship}
+                    </Link>
+                  </Flex>
+                </GridItem>
+              );
+            })}
           </Grid>
         )}
       </Content>

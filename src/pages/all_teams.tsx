@@ -8,7 +8,6 @@ import {
   Text,
   Link,
   Input,
-  Box,
   useBreakpointValue
 } from '@chakra-ui/react';
 import Content from '../layouts/content';
@@ -22,10 +21,6 @@ export default function AllTeams() {
   const [currentTeams, setCurrentTeams] =
     useState<{ team: string; logo: string }[]>(teams);
   const [filter, setFilter] = useState('');
-
-  const removeAccents = (str: string) => {
-    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-  };
 
   useEffect(() => {
     const fetchTeams = async () => {
@@ -72,79 +67,41 @@ export default function AllTeams() {
         />
         {isMobile ? (
           <Flex flexDir="column" gap={5}>
-            {currentTeams
-              ?.sort((a, b) =>
-                removeAccents(a.team).localeCompare(removeAccents(b.team))
-              )
-              .map((team, index) => {
-                const currentLetter = removeAccents(team.team.charAt(0));
-                const isFirstLetter =
-                  index === 0 ||
-                  removeAccents(currentTeams[index - 1].team.charAt(0)) !==
-                    currentLetter;
-
-                return (
-                  <>
-                    {isFirstLetter && (
-                      <Box key={`header-${currentLetter}`}>
-                        <Text fontWeight="bold" textTransform="uppercase">
-                          Letra {currentLetter}
-                        </Text>
-                      </Box>
-                    )}
-                    <Flex alignItems="center" key={team.logo + team.team}>
-                      <Image src={team.logo} alt={team.team} boxSize="25px" />
-                      <Link
-                        fontSize="sm"
-                        fontWeight="bold"
-                        as={RouterLink}
-                        to={`/times/${team.team}`}
-                      >
-                        {team.team}
-                      </Link>
-                    </Flex>
-                  </>
-                );
-              })}
+            {currentTeams.map(team => {
+              return (
+                <Flex alignItems="center" key={team.logo + team.team}>
+                  <Image src={team.logo} alt={team.team} boxSize="25px" />
+                  <Link
+                    fontSize="sm"
+                    fontWeight="bold"
+                    as={RouterLink}
+                    to={`/times/${team.team}`}
+                  >
+                    {team.team}
+                  </Link>
+                </Flex>
+              );
+            })}
           </Flex>
         ) : (
           <Grid templateColumns="repeat(5, 1fr)" gap={4}>
-            {currentTeams
-              ?.sort((a, b) =>
-                removeAccents(a.team).localeCompare(removeAccents(b.team))
-              )
-              .map((team, index) => {
-                const currentLetter = removeAccents(team.team.charAt(0));
-                const isFirstLetter =
-                  index === 0 ||
-                  removeAccents(currentTeams[index - 1].team.charAt(0)) !==
-                    currentLetter;
-
-                return (
-                  <>
-                    {isFirstLetter && (
-                      <GridItem key={`empty-${currentLetter}`} colSpan={5}>
-                        <Text fontWeight="bold" textTransform="uppercase">
-                          Letra {currentLetter}
-                        </Text>
-                      </GridItem>
-                    )}
-                    <GridItem key={`${team.logo}${team.team}`}>
-                      <Flex alignItems="center">
-                        <Image src={team.logo} alt={team.team} boxSize="25px" />
-                        <Link
-                          fontSize="sm"
-                          fontWeight="bold"
-                          as={RouterLink}
-                          to={`/times/${team.team}`}
-                        >
-                          {team.team}
-                        </Link>
-                      </Flex>
-                    </GridItem>
-                  </>
-                );
-              })}
+            {currentTeams.map(team => {
+              return (
+                <GridItem key={`${team.logo}${team.team}`}>
+                  <Flex alignItems="center">
+                    <Image src={team.logo} alt={team.team} boxSize="25px" />
+                    <Link
+                      fontSize="sm"
+                      fontWeight="bold"
+                      as={RouterLink}
+                      to={`/times/${team.team}`}
+                    >
+                      {team.team}
+                    </Link>
+                  </Flex>
+                </GridItem>
+              );
+            })}
           </Grid>
         )}
       </Content>
