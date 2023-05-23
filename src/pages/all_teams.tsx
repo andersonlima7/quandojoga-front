@@ -72,15 +72,15 @@ export default function AllTeams() {
         />
         {isMobile ? (
           <Flex flexDir="column" gap={5}>
-            {teams
-              .sort((a, b) =>
+            {currentTeams
+              ?.sort((a, b) =>
                 removeAccents(a.team).localeCompare(removeAccents(b.team))
               )
               .map((team, index) => {
                 const currentLetter = removeAccents(team.team.charAt(0));
                 const isFirstLetter =
                   index === 0 ||
-                  removeAccents(teams[index - 1].team.charAt(0)) !==
+                  removeAccents(currentTeams[index - 1].team.charAt(0)) !==
                     currentLetter;
 
                 return (
@@ -110,7 +110,7 @@ export default function AllTeams() {
         ) : (
           <Grid templateColumns="repeat(5, 1fr)" gap={4}>
             {currentTeams
-              .sort((a, b) =>
+              ?.sort((a, b) =>
                 removeAccents(a.team).localeCompare(removeAccents(b.team))
               )
               .map((team, index) => {
@@ -129,7 +129,7 @@ export default function AllTeams() {
                         </Text>
                       </GridItem>
                     )}
-                    <GridItem key={team.logo + team.team}>
+                    <GridItem key={`${team.logo}${team.team}`}>
                       <Flex alignItems="center">
                         <Image src={team.logo} alt={team.team} boxSize="25px" />
                         <Link

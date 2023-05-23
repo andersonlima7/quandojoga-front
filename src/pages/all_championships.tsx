@@ -72,8 +72,8 @@ export default function AllChampionships() {
         />
         {isMobile ? (
           <Flex flexDir="column" gap={5}>
-            {championships
-              .sort((a, b) =>
+            {currentChampionships
+              ?.sort((a, b) =>
                 removeAccents(a.championship).localeCompare(
                   removeAccents(b.championship)
                 )
@@ -85,7 +85,7 @@ export default function AllChampionships() {
                 const isFirstLetter =
                   index === 0 ||
                   removeAccents(
-                    championships[index - 1].championship.charAt(0)
+                    currentChampionships[index - 1].championship.charAt(0)
                   ) !== currentLetter;
 
                 return (
@@ -125,7 +125,7 @@ export default function AllChampionships() {
         ) : (
           <Grid templateColumns="repeat(5, 1fr)" gap={4}>
             {currentChampionships
-              .sort((a, b) =>
+              ?.sort((a, b) =>
                 removeAccents(a.championship).localeCompare(
                   removeAccents(b.championship)
                 )
