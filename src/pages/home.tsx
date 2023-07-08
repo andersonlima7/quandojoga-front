@@ -67,7 +67,7 @@ export default function Home() {
             searchKey={currDate.format('DD-MM-YY')}
             filter={{
               text: filter,
-              prop: ['team_home', 'team_away', 'championship']
+              prop: ['team_home', 'team_away', 'championship', 'tv']
             }}
           />
         </Flex>

@@ -56,12 +56,14 @@ export default function NavOptions() {
             `/championship/${championshipsList[i]}`
           );
           const { data } = await response;
-          const logo = data.championship_logo;
 
-          championshipsResponse.push({
-            championship: championshipsList[i],
-            logo
-          });
+          if (data) {
+            const logo = data.championship_logo;
+            championshipsResponse.push({
+              championship: championshipsList[i],
+              logo
+            });
+          }
         } catch (error) {
           console.log(error);
         }
