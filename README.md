@@ -99,7 +99,7 @@ Antes de executar a aplicação localmente, certifique-se de ter o seguinte inst
 	````
 3. Acesse os repositórios e instale as dependências de ambos os repositórios clonados com o comando `yarn ou npm i`.
 4. Execute os servidores de ambos os projetos com `yarn dev`.
-5. Abra seu navegador e visite http://localhost:3000 para acessar o front-end da aplicação.
+5. Abra seu navegador e visite http://localhost:5173 para acessar o front-end da aplicação.
 
 
 ## Autor 
