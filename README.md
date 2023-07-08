@@ -80,11 +80,6 @@ Acessando o link de um campeonato, as partidas desse campeonato são apresentada
 - ReactJS
 - Typescript
 
-
-## Obs
-O "Quando Joga?" atualmente não está configurado para ser atualizado constantemente, então a não ser que eu rode o crawler para atualizar os jogos todos os dias manualmente, a plataforma fica desatualizada.
-
-
 ## Pré-requisitos
 
 Antes de executar a aplicação localmente, certifique-se de ter o seguinte instalado em sua máquina:
