@@ -1,9 +1,9 @@
 
-# [Quando Joga?](https://quandojoga-front.vercel.app)
+# [Quando Joga?](https://quandojoga.vercel.app)
 
 ![](https://i.ibb.co/tMVzV2c/logotipo.png)
 
-[Link do site](https://quandojoga-front.vercel.app)
+[Link do site](https://quandojoga.vercel.app)
 
 ## Descrição
 
