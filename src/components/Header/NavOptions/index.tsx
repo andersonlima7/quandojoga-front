@@ -46,7 +46,8 @@ export default function NavOptions() {
       'Bundesliga',
       'Serie A',
       'Ligue 1 Uber Eats',
-      'Amistosos Internacionais'
+      'Amistosos Internacionais',
+      'Copa do Mundo Feminina™'
     ];
     const fetchChampionships = async () => {
       const championshipsResponse = [];
