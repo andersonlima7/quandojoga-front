@@ -1,9 +1,9 @@
 
-# [Quando Joga?](https://quandojoga-front.vercel.app)
+# [Quando Joga?](https://quandojoga.vercel.app)
 
 ![](https://i.ibb.co/tMVzV2c/logotipo.png)
 
-[Link do site](https://quandojoga-front.vercel.app)
+[Link do site](https://quandojoga.vercel.app)
 
 ## Descrição
 
@@ -80,11 +80,6 @@ Acessando o link de um campeonato, as partidas desse campeonato são apresentada
 - ReactJS
 - Typescript
 
-
-## Obs
-O "Quando Joga?" atualmente não está configurado para ser atualizado constantemente, então a não ser que eu rode o crawler para atualizar os jogos todos os dias manualmente, a plataforma fica desatualizada.
-
-
 ## Pré-requisitos
 
 Antes de executar a aplicação localmente, certifique-se de ter o seguinte instalado em sua máquina:
@@ -104,7 +99,7 @@ Antes de executar a aplicação localmente, certifique-se de ter o seguinte inst
 	````
 3. Acesse os repositórios e instale as dependências de ambos os repositórios clonados com o comando `yarn ou npm i`.
 4. Execute os servidores de ambos os projetos com `yarn dev`.
-5. Abra seu navegador e visite http://localhost:3000 para acessar o front-end da aplicação.
+5. Abra seu navegador e visite http://localhost:5173 para acessar o front-end da aplicação.
 
 
 ## Autor 
